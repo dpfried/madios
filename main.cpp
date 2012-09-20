@@ -70,8 +70,11 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
+    /*
     cout << "BEGIN CORPUS ----------" << endl;
+    */
     vector<vector<string> > sequences = readSequencesFromFile(argv[1]);
+    /*
     for(unsigned int i = 0; i < sequences.size(); i++)
     {
         for(unsigned int j = 0; j < sequences[i].size(); j++)
@@ -79,15 +82,20 @@ int main(int argc, char *argv[])
         cout << endl;
     }
     cout << "END CORPUS ----------" << endl << endl << endl;
+    */
 
     RDSGraph testGraph(sequences);
+    /*
     cout << testGraph << endl;
     double startTime = getTime();
+    */
     testGraph.distill(ADIOSParams(atof(argv[2]), atof(argv[3]), atoi(argv[4]), atof(argv[5])));
+    /*
     double endTime = getTime();
     cout << testGraph << endl << endl;
 
     std::cout << endl << "Time elapsed: " << endTime - startTime << " seconds" << endl << endl << endl << endl;
+    */
 
     testGraph.convert2PCFG(std::cout);
 /*
@@ -96,7 +104,7 @@ int main(int argc, char *argv[])
     endTime = getTime();
     cout << testGraph << endl << endl;
 
-    std::cout << endl << "Time elapsed: " << endTime - startTime << " seconds" << endl << endl << endl << endl;*/
+    std::cout << endl << "Time elapsed: " << endTime - startTime << " seconds" << endl << endl << endl << endl;*
 /*
     vector<string> testString(sequences[10].begin(), sequences[10].end());
     for(unsigned int i = 0; i < testString.size() - 1; i++)
