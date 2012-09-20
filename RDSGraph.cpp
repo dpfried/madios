@@ -86,6 +86,15 @@ void RDSGraph::distill(const ADIOSParams &params)
 
 void RDSGraph::convert2PCFG(ostream &out) const
 {
+    /* print sentences first so nltk doesn't barf */
+    for(unsigned int i = 0; i < paths.size(); i++)
+    {
+        out << "S ->";
+        for(unsigned int j = 1; j < paths[i].size()-1; j++)
+            out << " " << printNodeName(paths[i][j]);
+        out << std::endl;
+    }
+
     for(unsigned int i = 0; i < nodes.size(); i++)
     {
         if(nodes[i].type == LexiconTypes::EC)
@@ -103,16 +112,6 @@ void RDSGraph::convert2PCFG(ostream &out) const
             out << std::endl;
         }
     }
-
-    /*
-    for(unsigned int i = 0; i < paths.size(); i++)
-    {
-        out << "1 S -->";
-        for(unsigned int j = 1; j < paths[i].size()-1; j++)
-            out << " " << printNodeName(paths[i][j]);
-        out << std::endl;
-    }
-    */
 }
 
 vector<string> RDSGraph::generate() const
