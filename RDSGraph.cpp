@@ -99,9 +99,16 @@ void RDSGraph::convert2PCFG(ostream &out) const
     {
         if(nodes[i].type == LexiconTypes::EC)
         {
+            /* get total counts */
             EquivalenceClass *ec = static_cast<EquivalenceClass *>(nodes[i].lexicon);
+            int total_count = 0;
             for(unsigned int j = 0; j < ec->size(); j++)
-                out << "E" << i << " -> " << printNodeName((*ec)[j]) << std::endl;
+                total_count += counts[i][j];
+            for(unsigned int j = 0; j < ec->size(); j++)
+            {
+                float probability = ((float) counts[i][j]) / total_count;
+                out << "E" << i << " -> " << printNodeName((*ec)[j]) << " [" << probability << "]" << std::endl;
+            }
         }
         else if(nodes[i].type == LexiconTypes::SP)
         {
@@ -109,6 +116,7 @@ void RDSGraph::convert2PCFG(ostream &out) const
             out << "P" << i << " ->";
             for(unsigned int j = 0; j < sp->size(); j++)
                 out << " " << printNodeName((*sp)[j]);
+            out << " [1.0]";
             out << std::endl;
         }
     }
