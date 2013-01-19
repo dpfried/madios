@@ -92,6 +92,8 @@ void RDSGraph::convert2PCFG(ostream &out) const
         out << "S ->";
         for(unsigned int j = 1; j < paths[i].size()-1; j++)
             out << " " << printNodeName(paths[i][j]);
+        out << " [" << 1. / paths.size() << "]";
+        out << " {1} ";
         out << std::endl;
     }
 
@@ -107,7 +109,10 @@ void RDSGraph::convert2PCFG(ostream &out) const
             for(unsigned int j = 0; j < ec->size(); j++)
             {
                 float probability = ((float) counts[i][j]) / total_count;
-                out << "E" << i << " -> " << printNodeName((*ec)[j]) << " [" << probability << "]" << std::endl;
+                out << "E" << i << " -> " << printNodeName((*ec)[j]);
+                out << " [" << probability << "]";
+                out << " {" << counts[i][j] << "}"; 
+                out << std::endl;
             }
         }
         else if(nodes[i].type == LexiconTypes::SP)
@@ -117,6 +122,7 @@ void RDSGraph::convert2PCFG(ostream &out) const
             for(unsigned int j = 0; j < sp->size(); j++)
                 out << " " << printNodeName((*sp)[j]);
             out << " [1.0]";
+            out << " {" << counts[i][0] << "}";
             out << std::endl;
         }
     }
