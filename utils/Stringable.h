@@ -2,6 +2,7 @@
 #define STRINGABLE_H
 
 #include <string>
+#include <iostream>
 
 class Stringable
 {
